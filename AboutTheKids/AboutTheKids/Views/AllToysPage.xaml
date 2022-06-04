@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewModels="clr-namespace:AboutTheKids.ViewModel" xmlns:Behaviors="clr-namespace:AboutTheKids"
+             x:Class="AboutTheKids.Views.AllToysPage">
+
+    <ContentPage.BindingContext>
+        <viewModels:AllToysViewModel/>
+    </ContentPage.BindingContext>
+    
+    
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" HorizontalOptions="Center">
+                        <Button Text="New Arrival Toys" Command="{Binding GetNewArrivalToysCommand}"/>
+                        <Button Text="Best Seller Toys" Command="{Binding GetBestSellerToysCommand}"/>
+                    </StackLayout>
+
+                    <CollectionView x:Name="toys" Grid.Row="1" ItemsSource="{Binding AllToys,Mode=TwoWay}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="0" ColumnDefinitions="*,*,*" RowDefinitions="*,*" RowSpacing="0">
+                                    <Image Grid.Row="0" Grid.Column="0" Source="{Binding image}" HeightRequest="100" WidthRequest="100"/>
+                                    <StackLayout Grid.Row="0" Grid.Column="1" Margin="10">
+                                        <Label Text="{Binding name}" TextColor="Black" FontSize="Large" FontAttributes="Bold"/>
+                                        <Entry Text="{Binding coast}">
+                                            <Entry.Behaviors>
+                                                <Behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding BindingContext.ChangePriceCommand, Source={x:Reference toys}}"
+                                                                                  CommandParameter="{Binding .}"/>
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                    </StackLayout>
+                                    <Label Text="X" Grid.Row="0" Grid.Column="2" TextColor="Black" FontSize="Large" FontAttributes="Bold">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.RemoveItemCommand, Source={x:Reference toys}}" CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    
+                  
+
+                </Grid>
+
+            </ScrollView>
+
+            <Grid IsVisible="{Binding IsLoading}"
+                  Grid.Row="0"
+              BackgroundColor="#66666666">
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" 
+                                    Color="Blue"/>
+            </Grid>
+
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

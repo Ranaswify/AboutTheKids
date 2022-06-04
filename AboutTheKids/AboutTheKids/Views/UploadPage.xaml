@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:AboutTheKids.ViewModel"
+             x:Class="AboutTheKids.Views.UploadPage"
+             Title="About The Kids">
+    
+    <ContentPage.BindingContext>
+        <local:UploadViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView Grid.Row="0">
+                <StackLayout>
+                    <CollectionView ItemsSource="{Binding Images}" x:Name="ImagesCollection" HeightRequest="250" >
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10"  Margin="0" x:Name="item">
+                                    <Image Source="{Binding imgSource}"/>
+                                    <Image Source="group_2_copy_3.png" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.DeleteItemCommand, Source={x:Reference ImagesCollection}}" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                                <!--<Grid>
+                                    <Image Source="{Binding imgSource}" Margin="0,0,10,0" HeightRequest="200"/>
+                                </Grid>-->
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <StackLayout>
+                                    <Label Text="No Images Selected yet!" FontSize="20"
+                                                   HorizontalOptions="CenterAndExpand"
+                                                   VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                    <Button x:Name="btnPick" Text="Choose images to upload" Command="{Binding UpladItemsCommand}"></Button>
+                    <StackLayout Margin="5,0,5,0">
+
+                        <Label Text="Name" TextColor="Black"/>
+                        <Entry Placeholder="Name" Text="{Binding Name}"/>
+                        <Label Text="Description" TextColor="Black"/>
+                        <Editor Text="{Binding Description}" Placeholder="Description"/>
+                        <Label Text="Coast" TextColor="Black"/>
+                        <Entry Text="{Binding Coast}" Keyboard="Numeric"/>
+                        <Label Text="Category" TextColor="Black"/>
+                        <Picker ItemsSource="{Binding category}" ItemDisplayBinding="{Binding name}"
+                                SelectedItem="{Binding SelectedCategory}" Title="Select category" />
+                        <!--<CollectionView x:Name="categors" ItemsSource="{Binding category}"
+                                        SelectedItem="{Binding SelectedCategory}" HeightRequest="250">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Picker ItemsSource="{Binding category}" ItemDisplayBinding="{Binding name}"
+                                SelectedItem="{Binding SelectedCategory}" Title="Select category" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>-->
+
+                        <Button x:Name="btnStore" Text="Upload" Command="{Binding StoreItemsCommand}"></Button>
+                    </StackLayout>
+
+                  
+                </StackLayout>
+
+            </ScrollView>
+            <Grid IsVisible="{Binding IsLoading}"
+                  Grid.Row="0"
+              BackgroundColor="#66666666">
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" 
+                                    Color="Blue"/>  
+            </Grid>
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

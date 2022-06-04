@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AboutTheKids.MainPage" Title="About Kids">
+    <ContentPage.Content>
+        <!--<StackLayout>
+            <ListView x:Name="myList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="{Binding imgSource}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Editor />
+            --><!--<Image x:Name="imgChoosed" HeightRequest="200"></Image>--><!--
+            <Button x:Name="btnPick" Text="Pick" Clicked="btnPick_Clicked"></Button>
+            <Button x:Name="btnStore" Text="Store" Clicked="btnStore_Clicked"></Button>
+        </StackLayout>-->
+        <Grid>
+            <StackLayout Grid.Row="0" 
+                         VerticalOptions="CenterAndExpand">
+                <Button Text="Upload for New Arrival" TextColor="Black" Clicked="NewArrival_Clicked"/>
+                <Button Text="Upload for Best Seller" TextColor="Black" Clicked="BestSeller_Clicked"/>
+                <Button Text="Add Promo codes" TextColor="Black" Clicked="PromoCode_Clicked"/>
+                <Button Text="All Orders" TextColor="Black" Clicked="AllOrders_Clicked"/>
+                <Button Text="All Toys" TextColor="Black" Clicked="Button_Clicked"/>
+            </StackLayout>
+            <Grid x:Name="loader"
+                  Grid.Row="0"
+                  IsVisible="False"
+              BackgroundColor="#66666666">
+                <ActivityIndicator x:Name="loading"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" 
+                                   IsRunning="False"
+                                    Color="Blue"/>
+            </Grid>
+
+        </Grid>
+       
+    </ContentPage.Content>
+
+</ContentPage>
